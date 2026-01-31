@@ -21,7 +21,7 @@ public class UserRegrestationRequest {
 	@NotBlank
 	private String tenantName;
 	
-	@NotBlank
+	
 	private TenantType tenantType;
 
 }
