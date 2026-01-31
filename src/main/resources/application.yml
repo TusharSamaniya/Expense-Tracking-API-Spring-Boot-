@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: Expense_Tracking_API
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/expense_saas
+    username: postgres
+    password: fw18_0433
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # IMPORTANT with Flyway
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
+          database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    clean-disabled: false
+    validate-on-migrate: true
+
+
