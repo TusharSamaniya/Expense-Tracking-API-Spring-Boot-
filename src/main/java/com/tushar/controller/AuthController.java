@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tushar.dto.LoginRequest;
 import com.tushar.dto.UserRegrestationRequest;
+import com.tushar.service.IAuthService;
 import com.tushar.service.IUserService;
 
 import jakarta.validation.Valid;
@@ -20,10 +22,19 @@ public class AuthController {
 	
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private IAuthService authService;
 	
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@Valid @RequestBody UserRegrestationRequest request){
 		userService.register(request);
 		return ResponseEntity.ok("User registered successfully");
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<String> login(@RequestBody LoginRequest request){
+		String token = authService.login(request.getEmail(), request.getPassword());
+		return ResponseEntity.ok(token);
+		
 	}
 }

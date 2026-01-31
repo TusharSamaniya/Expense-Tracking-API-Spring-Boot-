@@ -21,6 +21,7 @@ public class SecurityBeansConfig {
             .csrf(csrf -> csrf.disable()) // important for Postman
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/register").permitAll()
+                .requestMatchers("/auth/login").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(Customizer.withDefaults());
