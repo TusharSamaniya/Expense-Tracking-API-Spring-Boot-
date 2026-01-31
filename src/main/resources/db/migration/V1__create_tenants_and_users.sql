@@ -1,0 +1,16 @@
+CREATE TABLE tenants(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(225) NOT NULL,
+	type VARCHAR(50) NOT NULL,
+	created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE users(
+	id SERIAL PRIMARY KEY,
+	email VARCHAR(225) UNIQUE NOT NULL,
+	password VARCHAR(225) NOT NULL,
+	tenant_id BIGINT NOT NULL,
+	CONSTRAINT fk_tenant
+		FOREIGN KEY (tenant_id)
+        REFERENCES tenants(id)
+);
