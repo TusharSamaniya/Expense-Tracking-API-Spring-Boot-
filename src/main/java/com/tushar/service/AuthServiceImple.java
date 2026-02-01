@@ -28,7 +28,7 @@ public class AuthServiceImple implements IAuthService {
 		if(!passwordEncoder.matches(password, user.getPassword()))
 			throw new RuntimeException("Invalied credentials");
 		
-		return jwttokenProvider.generateToken(user.getId(), user.getTenant().getId());
+		return jwttokenProvider.generateToken(user.getId(), user.getTenantId().getId());
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.tushar.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,14 +29,22 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private String name;
+	
 	@Column(unique = true, nullable = false)
 	private String email;
 	
 	@Column(nullable = false)
 	private String password;
 	
+	private String role;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tenant_id", nullable = false)
-	private Tenant tenant;
+	private Tenant tenantId;
+	
+	private LocalDateTime createdAt = LocalDateTime.now();
+	
+	
 
 }

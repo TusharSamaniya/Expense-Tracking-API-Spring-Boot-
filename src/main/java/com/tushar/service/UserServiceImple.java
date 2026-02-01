@@ -38,7 +38,7 @@ public class UserServiceImple implements IUserService {
 		User user = User.builder()
 				.email(request.getEmail())
 				.password(passwordEncoder.encode(request.getPassword()))
-				.tenant(tenant)
+				.tenantId(tenant)
 				.build();
 		
 		userRepository.save(user);
