@@ -5,16 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tushar.entity.Expense;
+import com.tushar.entity.Subscription;
 import com.tushar.entity.Tenant;
 import com.tushar.repository.IExpenseRepository;
-import com.tushar.repository.ITenantRepository;
+import com.tushar.repository.ISubscriptionRepository;
 
 public class ExpenseServiceImple implements IExpenseService {
 	
 	@Autowired
 	private IExpenseRepository expenseRepository;
+	
 	@Autowired
-	private ITenantRepository tenantRepository;
+	private ISubscriptionRepository subscriptionRepository;
 
 	@Override
 	public Expense createExpense(Expense expense, String tenantId) {
@@ -27,5 +29,19 @@ public class ExpenseServiceImple implements IExpenseService {
 	public List<Expense> getExpenses(String tenantId) {
 		return expenseRepository.findByTenant_TenantId(tenantId);
 	}
+
+
+	private void checkExpenseLimit(String tenantId) {
+
+        Subscription sub = subscriptionRepository
+                .findByTenant_TenantIdAndStatus(tenantId, "ACTIVE")
+                .orElseThrow(() -> new RuntimeException("No active subscription"));
+
+        int used = expenseRepository.countByTenant_TenantId(tenantId);
+
+        if (used >= sub.getPlan().getExpenseLimit()) {
+            throw new RuntimeException("Plan limit exceeded. Upgrade required.");
+        }
+    }
 
 }
