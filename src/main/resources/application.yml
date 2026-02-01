@@ -24,4 +24,11 @@ spring:
     clean-disabled: false
     validate-on-migrate: true
 
+razorpay:
+  key:
+    id: rzp_test_xxxxx
+    secret: xxxxx
+
+		
+
 
