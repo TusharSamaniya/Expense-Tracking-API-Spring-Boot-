@@ -1,16 +1,14 @@
 package com.tushar.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.tushar.tenent.TenantType;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,30 +17,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tenants")
+@Table(name = "expenses")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tenant {
+public class Expense {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Double amount;
+	private String category;
+	private String description;
+	private LocalDate expenseDate;
+	private String merchant;
+	private String receiptUrl;
 	
-	@Column(unique = true)
-	private String tenantId;
+	@ManyToOne
+	@JoinColumn(name = "user_id_fk")
+	private User createdBy;
 	
-	@Column(nullable = false)
-	private String name;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private TenantType type;
-	
-	private String plan;
-	
+	@ManyToOne
+	@JoinColumn(name = "tenant_id_fk")
+	private Tenant tenant;
 	private LocalDateTime createdAt = LocalDateTime.now();
 
 }

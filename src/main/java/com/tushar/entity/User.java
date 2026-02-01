@@ -40,7 +40,7 @@ public class User {
 	private String role;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tenant_id", nullable = false)
+	@JoinColumn(name = "tenant_id_fk", nullable = false)
 	private Tenant tenantId;
 	
 	private LocalDateTime createdAt = LocalDateTime.now();
